@@ -7,21 +7,39 @@ import javafx.util.Pair;
  */
 public class List {
     /**
+     *  Private access class.
+     *  Stores data for List class.
+     */
+    class Node {
+        /**
+         * Data. Node stores key and value.
+         */
+        private String key, value;
+        /**
+         * Next and previous nodes.
+         */
+        private Node prevNode = null;
+        private Node nextNode = null;
+
+        /**
+         * Constructor. Sets given key, value and next and previous nodes to <code>null</code>.
+         * @param key key to be set
+         * @param value value to be set
+         */
+        Node(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    /**
      * Head node to start iterating on list
      */
-    private Node head;
+    private Node head = null;
     /**
      * Number of elements in list
      */
-    private int size;
-
-    /**
-     * Constructor sets head to null and size to 0.
-     */
-    public List() {
-        this.head = null;
-        size = 0;
-    }
+    private int size = 0;
 
     /**
      * Adds new node to the beginning of the list
@@ -29,14 +47,14 @@ public class List {
      */
     private void addToBeginning(Node newNode) {
         if (head == null) {
-            newNode.setNextNode(null);
-            newNode.setPrevNode(null);
+            newNode.nextNode = null;
+            newNode.prevNode = null;
             head = newNode;
         }
         else {
-            newNode.setNextNode(head);
-            newNode.setPrevNode(null);
-            head.setPrevNode(newNode);
+            newNode.nextNode = head;
+            newNode.prevNode = null;
+            head.prevNode = newNode;
             head = newNode;
         }
 
@@ -50,12 +68,12 @@ public class List {
     private void addToEnd(Node newNode) {
         Node currentEndNode = head;
 
-        while (currentEndNode.getNextNode() != null)
-            currentEndNode = currentEndNode.getNextNode();
+        while (currentEndNode.nextNode != null)
+            currentEndNode = currentEndNode.nextNode;
 
-        newNode.setPrevNode(currentEndNode);
-        newNode.setNextNode(null);
-        currentEndNode.setNextNode(newNode);
+        newNode.prevNode = currentEndNode;
+        newNode.nextNode = null;
+        currentEndNode.nextNode = newNode;
 
         size++;
     }
@@ -77,12 +95,12 @@ public class List {
             Node currentNodeInIndex = head;
 
             for (int i = 0; i < index; i++)
-                currentNodeInIndex = currentNodeInIndex.getNextNode();
+                currentNodeInIndex = currentNodeInIndex.nextNode;
 
-            newNode.setNextNode(currentNodeInIndex);
-            newNode.setPrevNode(currentNodeInIndex.getPrevNode());
-            currentNodeInIndex.getPrevNode().setNextNode(newNode);
-            currentNodeInIndex.setPrevNode(newNode);
+            newNode.nextNode = currentNodeInIndex;
+            newNode.prevNode = currentNodeInIndex.prevNode;
+            currentNodeInIndex.prevNode.nextNode = newNode;
+            currentNodeInIndex.prevNode = newNode;
 
             size++;
         }
@@ -105,11 +123,11 @@ public class List {
      * @return value of deleted node
      */
     private String deleteFromBeginning() {
-        String value = head.getValue();
+        String value = head.value;
 
-        head = head.getNextNode();
+        head = head.nextNode;
         if (head != null)
-            head.setPrevNode(null);
+            head.prevNode = null;
         size--;
 
         return value;
@@ -122,11 +140,11 @@ public class List {
     private String deleteFromEnd() {
         Node currentEndNode = head;
 
-        while (currentEndNode.getNextNode() != null)
-            currentEndNode = currentEndNode.getNextNode();
+        while (currentEndNode.nextNode != null)
+            currentEndNode = currentEndNode.nextNode;
 
-        String value = currentEndNode.getValue();
-        currentEndNode.getPrevNode().setNextNode(null);
+        String value = currentEndNode.value;
+        currentEndNode.prevNode.nextNode = null;
         size--;
 
         return value;
@@ -149,11 +167,11 @@ public class List {
             Node nodeToDelete = head;
 
             for (int i = 0; i < index; i++)
-                nodeToDelete = nodeToDelete.getNextNode();
+                nodeToDelete = nodeToDelete.nextNode;
 
-            String value = nodeToDelete.getValue();
-            nodeToDelete.getPrevNode().setNextNode(nodeToDelete.getNextNode());
-            nodeToDelete.getNextNode().setPrevNode(nodeToDelete.getPrevNode());
+            String value = nodeToDelete.value;
+            nodeToDelete.prevNode.nextNode = nodeToDelete.nextNode;
+            nodeToDelete.nextNode.prevNode = nodeToDelete.prevNode;
 
             size--;
 
@@ -170,8 +188,8 @@ public class List {
         Node nodeInIndex = head;
         int index = 0;
 
-        while (nodeInIndex != null && !nodeInIndex.getKey().equals(key)) {
-            nodeInIndex = nodeInIndex.getNextNode();
+        while (nodeInIndex != null && !nodeInIndex.key.equals(key)) {
+            nodeInIndex = nodeInIndex.nextNode;
             index++;
         }
 
@@ -198,9 +216,9 @@ public class List {
         Node nodeInIndex = head;
 
         for (int i = 0; i < index; i++)
-            nodeInIndex = nodeInIndex.getNextNode();
+            nodeInIndex = nodeInIndex.nextNode;
 
-        return nodeInIndex.getKey();
+        return nodeInIndex.key;
     }
 
     /**
@@ -215,9 +233,9 @@ public class List {
         Node nodeInIndex = head;
 
         for (int i = 0; i < index; i++)
-            nodeInIndex = nodeInIndex.getNextNode();
+            nodeInIndex = nodeInIndex.nextNode;
 
-        return nodeInIndex.getValue();
+        return nodeInIndex.value;
     }
 
     /**
@@ -232,9 +250,9 @@ public class List {
         Node nodeInIndex = head;
 
         for (int i = 0; i < index; i++)
-            nodeInIndex = nodeInIndex.getNextNode();
+            nodeInIndex = nodeInIndex.nextNode;
 
-        return new Pair<>(nodeInIndex.getKey(), nodeInIndex.getValue());
+        return new Pair<>(nodeInIndex.key, nodeInIndex.value);
     }
 
     /**
@@ -245,9 +263,9 @@ public class List {
     public String getValueByKey(String key) {
         Node nodeInIndex = head;
 
-        while (nodeInIndex != null && !nodeInIndex.getKey().equals(key))
-            nodeInIndex = nodeInIndex.getNextNode();
+        while (nodeInIndex != null && !nodeInIndex.key.equals(key))
+            nodeInIndex = nodeInIndex.nextNode;
 
-        return nodeInIndex == null ? null : nodeInIndex.getValue();
+        return nodeInIndex == null ? null : nodeInIndex.value;
     }
 }
