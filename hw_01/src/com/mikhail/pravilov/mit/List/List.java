@@ -12,7 +12,7 @@ public class List {
      */
     class Node {
         /**
-         * Data. Node stores key and value.
+         * Class Data. Node stores key and value.
          */
         private String key, value;
         /**
