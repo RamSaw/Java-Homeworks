@@ -12,7 +12,7 @@ public class HashTable {
     /**
      * Number of elements stored in hashTable
      */
-    private int size;
+    private int size = 0;
     /**
      * Array of lists to store elements in hashTable
      */
@@ -33,7 +33,6 @@ public class HashTable {
      * and allocates hashTable array of length 1.
      */
     public HashTable() {
-        size = 0;
         initializeHashTable(1);
     }
 
@@ -61,7 +60,7 @@ public class HashTable {
 
     /**
      * Method to get size field
-     * @return size field(type <code>int</code>)
+     * @return size field
      */
     public int size() {
         return size;
@@ -82,7 +81,7 @@ public class HashTable {
      * @return <code>true</code> if exists, <code>false</code> if not(type <code>boolean</code>)
      */
     public boolean contains(String key) {
-        return hashTable[getIndexByKey(key)].getValueByKey(key) != null;
+        return get(key) != null;
     }
 
     /**
@@ -95,7 +94,8 @@ public class HashTable {
     }
 
     /**
-     * Puts pair key, value to hash table. Then performs resize of hashTable if needed.
+     * Puts pair key, value to hash table, if key exists then it deletes previous value.
+     * Then performs resize of hashTable if needed.
      * @param key key to put
      * @param value value to put
      * @return value that was stored before adding new value, if none was stored then <code>null</code> returns.
@@ -104,7 +104,8 @@ public class HashTable {
         int index  = getIndexByKey(key);
         String previousValue = hashTable[index].delete(key);
         hashTable[index].add(key, value, 0);
-        size++;
+        if (previousValue == null)
+            size++;
 
         resize();
         return previousValue;

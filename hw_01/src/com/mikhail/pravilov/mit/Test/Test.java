@@ -176,5 +176,17 @@ public class Test {
             removedValue = hashTable.remove("el" + i);
             assert removedValue.equals("value" + i);
         }
+
+        /* Test on putting existed key */
+        hashTable.clear();
+        hashTable.put("Existed", "value1");
+        assert hashTable.get("Existed").equals("value1");
+        assert hashTable.size() == 1;
+        hashTable.put("Existed", "value2");
+        assert hashTable.get("Existed").equals("value2");
+        assert hashTable.size() == 1;
+        hashTable.put("NotExisted", "value2");
+        assert hashTable.get("NotExisted").equals("value2");
+        assert hashTable.size() == 2;
     }
 }
