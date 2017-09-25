@@ -9,13 +9,9 @@ public class List {
      *  Stores data for list class.
      */
     class Node {
-        /**
-         * Class Data. Node stores key and value.
-         */
+        /** Class Data. Node stores key and value. */
         private String key, value;
-        /**
-         * Next and previous nodes.
-         */
+        /** Next and previous nodes. */
         private Node prevNode = null;
         private Node nextNode = null;
 
@@ -30,13 +26,9 @@ public class List {
         }
     }
 
-    /**
-     * Head node to start iterating on list
-     */
+    /** Head node to start iterating on list */
     private Node head = null;
-    /**
-     * Number of elements in list
-     */
+    /** Number of elements in list */
     private int size = 0;
 
     /**
@@ -194,9 +186,7 @@ public class List {
         return nodeInIndex == null ? null : deleteByIndex(index);
     }
 
-    /**
-     * Removes all elements in list
-     */
+    /** Removes all elements in list */
     public void clear() {
         while (head != null)
             deleteFromBeginning();

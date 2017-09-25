@@ -7,13 +7,9 @@ import static java.lang.Math.*;
 
 /** Class for realization hash table with separate chaining data structure. */
 public class HashTable {
-    /**
-     * Number of elements stored in hashTable
-     */
+    /** Number of elements stored in hashTable */
     private int size = 0;
-    /**
-     * Array of lists to store elements in hashTable
-     */
+    /** Array of lists to store elements in hashTable */
     private List[] hashTable;
 
     /**
@@ -121,9 +117,7 @@ public class HashTable {
         return removedValue;
     }
 
-    /**
-     * Removes all elements in hash table.
-     */
+    /** Removes all elements in hash table. */
     public void clear() {
         for (List list : hashTable)
             list.clear();

@@ -18,9 +18,7 @@ public class Test {
         testHashTable();
     }
 
-    /**
-     * Tests for List class
-     */
+    /** Tests for List class */
     private static void testList() {
         List list = new List();
         list.add("el1", "kek", 0);
@@ -118,9 +116,7 @@ public class Test {
         assert raisedException;
     }
 
-    /**
-     * test for HashTable class
-     */
+    /** test for HashTable class */
     private static void testHashTable() {
         HashTable hashTable = new HashTable();
 
