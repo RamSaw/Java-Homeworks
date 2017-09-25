@@ -1,13 +1,11 @@
-package com.mikhail.pravilov.mit.HashTable;
+package com.mikhail.pravilov.mit.hashTable;
 
-import com.mikhail.pravilov.mit.List.List;
+import com.mikhail.pravilov.mit.list.List;
 import javafx.util.Pair;
 
 import static java.lang.Math.*;
 
-/**
- * Class for realization hash table with separate chaining data structure.
- */
+/** Class for realization hash table with separate chaining data structure. */
 public class HashTable {
     /**
      * Number of elements stored in hashTable
@@ -19,7 +17,7 @@ public class HashTable {
     private List[] hashTable;
 
     /**
-     * Method initializes hashTable array by List() constructor.
+     * Method initializes hashTable array by list() constructor.
      * @param length the length of array to allocate
      */
     private void initializeHashTable(int length) {
@@ -29,7 +27,7 @@ public class HashTable {
     }
 
     /**
-     * Constructor for HashTable class. Sets size to 0
+     * Constructor for hashTable class. Sets size to 0
      * and allocates hashTable array of length 1.
      */
     public HashTable() {
@@ -41,7 +39,7 @@ public class HashTable {
      * New length is 10 * old length and round up to nearest power of 2.
      */
     private void resize() {
-        if ((size * 1.0) / hashTable.length < 0.5)
+        if ((double)size / hashTable.length < 0.5)
             return;
 
         List[] copyHashTable = hashTable;
