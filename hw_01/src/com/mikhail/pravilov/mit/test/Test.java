@@ -1,7 +1,7 @@
-package com.mikhail.pravilov.mit.Test;
+package com.mikhail.pravilov.mit.test;
 
-import com.mikhail.pravilov.mit.HashTable.HashTable;
-import com.mikhail.pravilov.mit.List.List;
+import com.mikhail.pravilov.mit.hashTable.HashTable;
+import com.mikhail.pravilov.mit.list.List;
 import javafx.util.Pair;
 
 /**
@@ -119,7 +119,7 @@ public class Test {
     }
 
     /**
-     * Test for HashTable class
+     * test for HashTable class
      */
     private static void testHashTable() {
         HashTable hashTable = new HashTable();
@@ -177,7 +177,7 @@ public class Test {
             assert removedValue.equals("value" + i);
         }
 
-        /* Test on putting existed key */
+        /* test on putting existed key */
         hashTable.clear();
         hashTable.put("Existed", "value1");
         assert hashTable.get("Existed").equals("value1");

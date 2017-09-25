@@ -1,14 +1,12 @@
-package com.mikhail.pravilov.mit.List;
+package com.mikhail.pravilov.mit.list;
 
 import javafx.util.Pair;
 
-/**
- * Class for realization list data structure.
- */
+/** Class for realization list data structure. */
 public class List {
     /**
      *  Private access class.
-     *  Stores data for List class.
+     *  Stores data for list class.
      */
     class Node {
         /**
