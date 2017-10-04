@@ -1,0 +1,9 @@
+/out/*
+/.idea/uiDesigner.xml
+/.idea/workspace.xml
+/.idea/description.xml
+/gradlew
+/gradlew.bat
+/.gradle/*
+/build/*
+/gradle/*
