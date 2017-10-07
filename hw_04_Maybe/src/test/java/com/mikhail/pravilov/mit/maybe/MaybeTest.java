@@ -88,10 +88,12 @@ public class MaybeTest {
     @Test
     public void readWriteIntegersWrappedInMaybe() {
         ArrayList<Maybe<Integer>> wrappedIntegers = readIntegersInLineFromFile("integers.in");
-
         assertNotNull(wrappedIntegers);
-        wrappedIntegers.forEach(integerMaybe -> {integerMaybe.map(x -> x * x);});
-        assertTrue(writeIntegersWrappedInMaybe(wrappedIntegers, "wrappedIntegers.out"));
+
+        ArrayList<Maybe<Integer>> wrappedSquareIntegers = new ArrayList<>();
+        for (Maybe<Integer> wrappedInteger : wrappedIntegers)
+            wrappedSquareIntegers.add(wrappedInteger.map(x -> x * x));
+        assertTrue(writeIntegersWrappedInMaybe(wrappedSquareIntegers, "wrappedIntegers.out"));
     }
 
 }
