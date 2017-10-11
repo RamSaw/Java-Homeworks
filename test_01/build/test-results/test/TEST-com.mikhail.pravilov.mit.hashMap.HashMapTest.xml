@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.mikhail.pravilov.mit.hashMap.HashMapTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-10-11T15:29:23" hostname="mikhail-ThinkPad-E460" time="0.01">
+  <properties/>
+  <testcase name="entrySet" classname="com.mikhail.pravilov.mit.hashMap.HashMapTest" time="0.01"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
