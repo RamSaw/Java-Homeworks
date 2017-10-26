@@ -8,19 +8,6 @@ import org.jetbrains.annotations.NotNull;
  * @param <T> type of stored values, must be comparable.
  */
 public class Set<T extends Comparable<T>> {
-    /**
-     * Class to store vertex of binary search tree.
-     * Fields: left subtree, right subtree, stored value in vertex.
-     */
-    private class Node {
-        Node left = null, right = null;
-        T storedValue;
-
-        private Node(T storedValue) {
-            this.storedValue = storedValue;
-        }
-    }
-
     private Node root = null;
     private int size = 0;
 
@@ -69,7 +56,7 @@ public class Set<T extends Comparable<T>> {
         if (valueToFind.compareTo(node.storedValue) < 0) {
             return containsSubTree(node.left, valueToFind);
         }
-        if (valueToFind.compareTo(node.storedValue) > 0) {
+        else if (valueToFind.compareTo(node.storedValue) > 0) {
             return containsSubTree(node.right, valueToFind);
         }
 
@@ -91,5 +78,19 @@ public class Set<T extends Comparable<T>> {
      */
     public int size() {
         return size;
+    }
+
+    /**
+     * Class to store vertex of binary search tree.
+     * Fields: left subtree, right subtree, stored value in vertex.
+     */
+    private class Node {
+        private Node left = null;
+        private Node right = null;
+        T storedValue;
+
+        private Node(T storedValue) {
+            this.storedValue = storedValue;
+        }
     }
 }
