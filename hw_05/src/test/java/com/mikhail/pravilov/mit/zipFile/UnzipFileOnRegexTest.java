@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -32,7 +33,7 @@ public class UnzipFileOnRegexTest {
             out.write(data, 0, data.length);
             out.closeEntry();
 
-            e = new ZipEntry("dir/kek.txt");
+            e = new ZipEntry("dir" + File.separator + "kek.txt");
             out.putNextEntry(e);
         }
 
@@ -60,8 +61,8 @@ public class UnzipFileOnRegexTest {
     @Test
     public void findAllZipFiles() throws Exception {
         ArrayList<String> zipFiles = UnzipFileOnRegex.findAllZipFiles(currentDirAbsolutePath);
-        assertTrue(zipFiles.contains(currentDirAbsolutePath + "/test1.zip"));
-        assertTrue(zipFiles.contains(currentDirAbsolutePath + "/test2.txt.zip"));
+        assertTrue(zipFiles.contains(currentDirAbsolutePath + File.separator + "test1.zip"));
+        assertTrue(zipFiles.contains(currentDirAbsolutePath + File.separator + "test2.txt.zip"));
     }
 
     @Test(expected = NotDirectoryException.class)
@@ -79,29 +80,29 @@ public class UnzipFileOnRegexTest {
 
     @Test
     public void extractFilesThatFitRegEx() throws Exception {
-        UnzipFileOnRegex.extractFilesThatFitRegEx(currentDirAbsolutePath + "/test1.zip", ".*", currentDirAbsolutePath);
-        checkFilesOnExistenceAndDelete(new ArrayList<>(Arrays.asList(currentDirAbsolutePath + "/dir/kek.txt",
-                currentDirAbsolutePath + "/kek.txt")));
-        Files.delete(FileSystems.getDefault().getPath(currentDirAbsolutePath + "/dir"));
+        UnzipFileOnRegex.extractFilesThatFitRegEx(currentDirAbsolutePath + File.separator + "test1.zip", ".*", currentDirAbsolutePath);
+        checkFilesOnExistenceAndDelete(new ArrayList<>(Arrays.asList(currentDirAbsolutePath + File.separator + "dir" + File.separator + "kek.txt",
+                currentDirAbsolutePath + File.separator + "kek.txt")));
+        Files.delete(FileSystems.getDefault().getPath(currentDirAbsolutePath + File.separator + "dir"));
 
-        UnzipFileOnRegex.extractFilesThatFitRegEx(currentDirAbsolutePath + "/test2.txt.zip", ".*",
+        UnzipFileOnRegex.extractFilesThatFitRegEx(currentDirAbsolutePath + File.separator + "test2.txt.zip", ".*",
                 currentDirAbsolutePath);
-        checkFilesOnExistenceAndDelete(new ArrayList<>(Arrays.asList(currentDirAbsolutePath + "/kuk.txt",
-                currentDirAbsolutePath + "/kek.txt", currentDirAbsolutePath + "/aaa.txt")));
+        checkFilesOnExistenceAndDelete(new ArrayList<>(Arrays.asList(currentDirAbsolutePath + File.separator + "kuk.txt",
+                currentDirAbsolutePath + File.separator + "kek.txt", currentDirAbsolutePath + File.separator + "aaa.txt")));
 
-        UnzipFileOnRegex.extractFilesThatFitRegEx(currentDirAbsolutePath + "/test2.txt.zip",
+        UnzipFileOnRegex.extractFilesThatFitRegEx(currentDirAbsolutePath + File.separator+ "test2.txt.zip",
                 "kuk.txt", currentDirAbsolutePath);
-        checkFilesOnExistenceAndDelete(new ArrayList<>(Arrays.asList(currentDirAbsolutePath + "/kuk.txt")));
+        checkFilesOnExistenceAndDelete(new ArrayList<>(Collections.singletonList(currentDirAbsolutePath + File.separator + "kuk.txt")));
 
-        UnzipFileOnRegex.extractFilesThatFitRegEx(currentDirAbsolutePath + "/test2.txt.zip",
+        UnzipFileOnRegex.extractFilesThatFitRegEx(currentDirAbsolutePath + File.separator + "test2.txt.zip",
                 "k.k.txt", currentDirAbsolutePath);
-        checkFilesOnExistenceAndDelete(new ArrayList<>(Arrays.asList(currentDirAbsolutePath + "/kuk.txt",
-                currentDirAbsolutePath + "/kek.txt")));
+        checkFilesOnExistenceAndDelete(new ArrayList<>(Arrays.asList(currentDirAbsolutePath + File.separator + "kuk.txt",
+                currentDirAbsolutePath + File.separator + "kek.txt")));
     }
 
     @After
     public void deleteCreatedZipFiles() throws Exception {
-        Files.deleteIfExists(FileSystems.getDefault().getPath(currentDirAbsolutePath + "/test1.zip"));
-        Files.deleteIfExists(FileSystems.getDefault().getPath(currentDirAbsolutePath + "/test2.txt.zip"));
+        Files.deleteIfExists(FileSystems.getDefault().getPath(currentDirAbsolutePath + File.separator + "test1.zip"));
+        Files.deleteIfExists(FileSystems.getDefault().getPath(currentDirAbsolutePath + File.separator + "test2.txt.zip"));
     }
 }
