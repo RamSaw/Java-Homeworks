@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
  * Class that implements MyTreeSet interface by storing values in binary search tree.
  * @param <E> - type of stored values
  */
-public class MyTreeSetImplementation<E extends Comparable<? super E>> implements MyTreeSet<E>  {
+public class MyTreeSetImplementation<E> implements MyTreeSet<E>  {
     private Node root = null;
     private int size = 0;
     private Comparator<? super E> comparator;
@@ -26,9 +26,10 @@ public class MyTreeSetImplementation<E extends Comparable<? super E>> implements
     }
 
     private int compare(E e1, E e2) {
-        return (comparator == null) ? e1.compareTo(e2) : comparator.compare(e1, e2);
+        return (comparator == null) ? ((Comparable<E>) e1).compareTo(e2) : comparator.compare(e1, e2);
     }
 
+    @NotNull
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
