@@ -26,7 +26,7 @@ public class MyTreeSetImplementation<E> implements MyTreeSet<E>  {
     }
 
     private int compare(E e1, E e2) {
-        return (comparator == null) ? ((Comparable<E>) e1).compareTo(e2) : comparator.compare(e1, e2);
+        return (comparator == null) ? ((Comparable<? super E>) e1).compareTo(e2) : comparator.compare(e1, e2);
     }
 
     @NotNull
