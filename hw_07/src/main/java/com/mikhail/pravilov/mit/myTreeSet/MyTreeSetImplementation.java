@@ -4,16 +4,13 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * Class that implements MyTreeSet interface by storing values in binary search tree.
  * @param <E> - type of stored values
  */
-public class MyTreeSetImplementation<E> implements MyTreeSet<E>  {
+public class MyTreeSetImplementation<E> extends AbstractSet<E> implements MyTreeSet<E>  {
     private Node root = null;
     private int size = 0;
     private Comparator<? super E> comparator;
@@ -435,45 +432,5 @@ public class MyTreeSetImplementation<E> implements MyTreeSet<E>  {
         private Node(E storedValue) {
             this.storedValue = storedValue;
         }
-    }
-
-    // Not implemented methods.
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
-    @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends E> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public void clear() {
     }
 }
