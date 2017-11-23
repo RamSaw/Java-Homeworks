@@ -6,6 +6,7 @@ import com.mikhail.pravilov.mit.Predicate.Predicate;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;

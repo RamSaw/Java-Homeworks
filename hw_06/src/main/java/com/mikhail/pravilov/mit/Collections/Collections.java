@@ -3,10 +3,12 @@ package com.mikhail.pravilov.mit.Collections;
 import com.mikhail.pravilov.mit.Function1.Function1;
 import com.mikhail.pravilov.mit.Function2.Function2;
 import com.mikhail.pravilov.mit.Predicate.Predicate;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Class that implements basic functions on collections
@@ -19,9 +21,10 @@ public class Collections {
      * @param collection elements.
      * @param <T>        base type of elements.
      * @param <R>        type of elements in result list.
-     * @return ArrayList of elements applied to function.
+     * @return List of elements applied to function.
      */
-    static public <T, R> ArrayList<R> map(Function1<? super T, ? extends R> function, Iterable<? extends T> collection) {
+    @NotNull
+    static public <T, R> List<R> map(@NotNull Function1<? super T, ? extends R> function, @NotNull Iterable<? extends T> collection) {
         ArrayList<R> mapped = new ArrayList<>();
         for (T element : collection) {
             mapped.add(function.apply(element));
@@ -36,10 +39,11 @@ public class Collections {
      * @param predicate  condition on elements.
      * @param collection elements.
      * @param <T>        basic type of elements.
-     * @return ArrayList of elements that are true on given predicate.
+     * @return List of elements that are true on given predicate.
      */
-    static public <T> ArrayList<T> filter(Predicate<? super T> predicate, Iterable<? extends T> collection) {
-        ArrayList<T> mapped = new ArrayList<>();
+    @NotNull
+    static public <T> List<T> filter(@NotNull Predicate<? super T> predicate, @NotNull Iterable<? extends T> collection) {
+        final ArrayList<T> mapped = new ArrayList<>();
         for (T element : collection) {
             if (predicate.apply(element))
                 mapped.add(element);
@@ -54,10 +58,11 @@ public class Collections {
      * @param predicate  condition.
      * @param collection elements.
      * @param <T>        basic type of elements.
-     * @return ArrayList of first elements that are true on given predicate.
+     * @return List of first elements that are true on given predicate.
      */
-    static public <T> ArrayList<T> takeWhile(Predicate<? super T> predicate, Iterable<? extends T> collection) {
-        ArrayList<T> mapped = new ArrayList<>();
+    @NotNull
+    static public <T> List<T> takeWhile(@NotNull Predicate<? super T> predicate, @NotNull Iterable<? extends T> collection) {
+        final ArrayList<T> mapped = new ArrayList<>();
         for (T element : collection) {
             if (!predicate.apply(element))
                 break;
@@ -73,10 +78,11 @@ public class Collections {
      * @param predicate  condition.
      * @param collection elements.
      * @param <T>        basic type of elements.
-     * @return ArrayList of first elements that are false on given predicate.
+     * @return List of first elements that are false on given predicate.
      */
-    static public <T> ArrayList<T> takeUnless(Predicate<? super T> predicate, Iterable<? extends T> collection) {
-        ArrayList<T> mapped = new ArrayList<>();
+    @NotNull
+    static public <T> List<T> takeUnless(@NotNull Predicate<? super T> predicate, @NotNull Iterable<? extends T> collection) {
+        final ArrayList<T> mapped = new ArrayList<>();
         for (T element : collection) {
             if (predicate.apply(element))
                 break;
@@ -95,8 +101,8 @@ public class Collections {
      * @param <T>          type of initial value and type of return value
      * @return accumulated value
      */
-    static public <T> T foldr(Function2<? super T, ? super T, ? extends T> function,
-                              T initialValue, Collection<? extends T> collection) {
+    static public <T> T foldr(@NotNull Function2<? super T, ? super T, ? extends T> function,
+                              T initialValue, @NotNull Collection<? extends T> collection) {
         for (T element : collection) {
             initialValue = function.apply(initialValue, element);
         }
@@ -113,17 +119,17 @@ public class Collections {
      * @param <T>          type of initial value and type of return value
      * @return accumulated value
      */
-    static public <T> T foldl(Function2<? super T, ? super T, ? extends T> function,
-                              T initialValue, Collection<? extends T> collection) {
+    static public <T> T foldl(@NotNull Function2<? super T, ? super T, ? extends T> function,
+                              T initialValue, @NotNull Collection<? extends T> collection) {
         return foldl(function, initialValue, collection.iterator());
     }
 
-    static private <T> T foldl(Function2<? super T, ? super T, ? extends T> function,
-                               T initialValue, Iterator<? extends T> collectionIterator) {
+    static private <T> T foldl(@NotNull Function2<? super T, ? super T, ? extends T> function,
+                               T initialValue, @NotNull Iterator<? extends T> collectionIterator) {
         if (!collectionIterator.hasNext())
             return initialValue;
 
-        T value = collectionIterator.next();
+        final T value = collectionIterator.next();
         return function.apply(value, foldl(function, initialValue, collectionIterator));
     }
 }

@@ -27,20 +27,20 @@ public interface Function2<T, U, R> {
      * Method to bind 1st parameter of function.
      *
      * @param firstParameter value of 1st argument to bind.
-     * @return function from 2 arguments that always ignores given 1st argument because 1st argument is bind.
+     * @return function from 1 arguments that waits for the second argument.
      */
-    default Function2<T, U, R> bind1(T firstParameter) {
-        return (t, u) -> apply(firstParameter, u);
+    default Function1<U, R> bind1(T firstParameter) {
+        return (u) -> apply(firstParameter, u);
     }
 
     /**
      * Method to bind 2nd parameter of function.
      *
      * @param secondParameter value of 2nd argument to bind.
-     * @return function from 2 arguments that always ignores given 2nd argument because 2nd argument is bind.
+     * @return function from 1 arguments that waits for the first argument.
      */
-    default Function2<T, U, R> bind2(U secondParameter) {
-        return (t, u) -> apply(t, secondParameter);
+    default Function1<T, R> bind2(U secondParameter) {
+        return (t) -> apply(t, secondParameter);
     }
 
     /**
@@ -50,6 +50,6 @@ public interface Function2<T, U, R> {
      * @return function from 1 argument(1st argument of Function2).
      */
     default Function1<T, R> curry(U parameter) {
-        return (t) -> apply(t, parameter);
+        return bind2(parameter);
     }
 }

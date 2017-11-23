@@ -46,26 +46,26 @@ public class Function2Test {
     public void bind1() throws Exception {
         Integer expected;
         expected = 100;
-        assertEquals(expected, mul.bind1(10).apply(4, 10));
+        assertEquals(expected, mul.bind1(10).apply(10));
         expected = 1;
-        assertEquals(expected, div.bind1(10).apply(20, 10));
+        assertEquals(expected, div.bind1(10).apply(10));
         expected = 0;
-        assertEquals(expected, sub.bind1(10).apply(4, 10));
+        assertEquals(expected, sub.bind1(10).apply(10));
         expected = 20;
-        assertEquals(expected, sum.bind1(10).apply(4, 10));
+        assertEquals(expected, sum.bind1(10).apply(10));
     }
 
     @Test
     public void bind2() throws Exception {
         Integer expected;
         expected = 40;
-        assertEquals(expected, mul.bind2(10).apply(4, 20));
+        assertEquals(expected, mul.bind2(10).apply(4));
         expected = 1;
-        assertEquals(expected, div.bind2(10).apply(10, 20));
+        assertEquals(expected, div.bind2(10).apply(10));
         expected = -6;
-        assertEquals(expected, sub.bind2(10).apply(4, 1));
+        assertEquals(expected, sub.bind2(10).apply(4));
         expected = 14;
-        assertEquals(expected, sum.bind2(10).apply(4, 20));
+        assertEquals(expected, sum.bind2(10).apply(4));
     }
 
     @Test
