@@ -22,6 +22,13 @@ public class MyTreeSetImplementation<E> extends AbstractSet<E> implements MyTree
         this.comparator = comparator;
     }
 
+    private MyTreeSetImplementation(Node root, int size, Comparator<? super E> comparator) {
+        this.root = root;
+        this.size = size;
+        this.comparator = comparator;
+    }
+
+    @SuppressWarnings("unchecked")
     private int compare(E e1, E e2) {
         return (comparator == null) ? ((Comparable<? super E>) e1).compareTo(e2) : comparator.compare(e1, e2);
     }
@@ -240,20 +247,22 @@ public class MyTreeSetImplementation<E> extends AbstractSet<E> implements MyTree
     }
 
     @Nullable
-    private E floor(@NotNull Node node, E e) {
+    private E walkThroughTree(@NotNull Node node, E e, boolean firstRight, Comparator<E> comparator) {
         E returnValue;
 
-        if (node.right != null) {
-            returnValue = floor(node.right, e);
+        Node first = firstRight ? node.right : node.left, second = firstRight ? node.left : node.right;
+
+        if (first != null) {
+            returnValue = walkThroughTree(first, e, firstRight, comparator);
             if (returnValue != null)
                 return returnValue;
         }
 
-        if (compare(node.storedValue, e) <= 0)
+        if (comparator.compare(node.storedValue, e) <= 0)
             return node.storedValue;
 
-        if (node.left != null) {
-            returnValue = floor(node.left, e);
+        if (second != null) {
+            returnValue = walkThroughTree(second, e, firstRight, comparator);
             if (returnValue != null)
                 return returnValue;
         }
@@ -267,37 +276,15 @@ public class MyTreeSetImplementation<E> extends AbstractSet<E> implements MyTree
         if (isEmpty())
             return null;
 
-        return floor(root, e);
-    }
-
-    @Nullable
-    private E ceiling(@NotNull Node node, E e) {
-        E returnValue;
-
-        if (node.left != null) {
-            returnValue = ceiling(node.left, e);
-            if (returnValue != null)
-                return returnValue;
-        }
-
-        if (compare(node.storedValue, e) >= 0)
-            return node.storedValue;
-
-        if (node.right != null) {
-            returnValue = ceiling(node.right, e);
-            if (returnValue != null)
-                return returnValue;
-        }
-
-        return null;
+        return walkThroughTree(root, e, true, this::compare);
     }
 
     @Override
-    public E ceiling(E e) {
+    public E ceiling(E e) throws NullPointerException {
         if (isEmpty())
             return null;
 
-        return ceiling(root, e);
+        return walkThroughTree(root, e, false, (e1, e2) -> -compare(e1, e2));
     }
 
     @Nullable
@@ -323,7 +310,7 @@ public class MyTreeSetImplementation<E> extends AbstractSet<E> implements MyTree
     }
 
     @Override
-    public E higher(E e) {
+    public E higher(E e) throws NullPointerException {
         if (isEmpty())
             return null;
 

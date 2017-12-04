@@ -177,16 +177,33 @@ public class TreeSetTest {
         }
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void firstNoSuchElementException() throws Exception {
+        MyTreeSetImplementation<Integer> treeSet = new MyTreeSetImplementation<>();
+        treeSet.first();
+    }
+
     @Test
     public void first() throws Exception {
         assertEquals(integers.first(), treeSetIntegers.first());
         assertEquals(strings.first(), treeSetStrings.first());
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void lastNoSuchElementException() throws Exception {
+        MyTreeSetImplementation<Integer> treeSet = new MyTreeSetImplementation<>();
+        treeSet.last();
+    }
+
     @Test
     public void last() throws Exception {
         assertEquals(integers.last(), treeSetIntegers.last());
         assertEquals(strings.last(), treeSetStrings.last());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void lowerNullPointerException() throws Exception {
+        treeSetStrings.lower(null);
     }
 
     @Test
@@ -200,6 +217,11 @@ public class TreeSetTest {
         }
     }
 
+    @Test(expected = NullPointerException.class)
+    public void floorNullPointerException() throws Exception {
+        treeSetStrings.floor(null);
+    }
+
     @Test
     public void floor() throws Exception {
         for (Integer testIntegerValue : testIntegerValues) {
@@ -209,6 +231,11 @@ public class TreeSetTest {
         for (String testStringValue : testStringValues) {
             assertEquals(treeSetStrings.floor(testStringValue), strings.floor(testStringValue));
         }
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void ceilingNullPointerException() throws Exception {
+        treeSetStrings.ceiling(null);
     }
 
     @Test
@@ -231,6 +258,11 @@ public class TreeSetTest {
         for (String testStringValue : testStringValues) {
             assertEquals(treeSetStrings.higher(testStringValue), strings.higher(testStringValue));
         }
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void higherNullPointerException() throws Exception {
+        treeSetStrings.higher(null);
     }
 
     @Test
