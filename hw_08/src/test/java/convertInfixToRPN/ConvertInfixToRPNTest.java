@@ -17,4 +17,13 @@ public class ConvertInfixToRPNTest {
                 ConvertInfixToRPN.convertInfixToRPN(new String[]{"(", "1", "+", "2", ")"}));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsIllegalArgumentExceptionUnsupportedOperation() throws Exception {
+        ConvertInfixToRPN.convertInfixToRPN(new String[]{"2", "%", "5"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsIllegalArgumentExceptionNotANumber() throws Exception {
+        ConvertInfixToRPN.convertInfixToRPN(new String[]{"2aaa", "*", "5"});
+    }
 }

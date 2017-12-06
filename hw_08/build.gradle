@@ -13,4 +13,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
+
+    // https://mvnrepository.com/artifact/org.jetbrains/annotations
+    compile group: 'org.jetbrains', name: 'annotations', version: '15.0'
 }

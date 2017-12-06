@@ -1,5 +1,6 @@
 package calculator;
 
+import org.jetbrains.annotations.NotNull;
 import stack.Stack;
 
 import java.util.Arrays;
@@ -15,7 +16,7 @@ public class Calculator {
      * Calculator constructor.
      * @param numbers stack implementation where to store numbers.
      */
-    public Calculator(Stack<Double> numbers) {
+    public Calculator(@NotNull Stack<Double> numbers) {
         this.numbers = numbers;
     }
 
@@ -23,11 +24,13 @@ public class Calculator {
      * Method to calculate expression in postfix notation.
      * @param reversePolishNotation expression in reverse polish notation.
      * @return calculated value.
+     * @throws NumberFormatException if it meets unknown expression (not +,-,*,/ or number).
      */
-    public Double calculateExpression(String[] reversePolishNotation) {
+    @NotNull
+    public Double calculateExpression(@NotNull String[] reversePolishNotation) throws NumberFormatException {
         numbers.clear();
 
-        Arrays.asList(reversePolishNotation).stream().forEach(number -> {
+        Arrays.stream(reversePolishNotation).forEach(number -> {
             switch(number) {
                 case "+":
                     calculateBySign((n1, n2) -> n2 + n1);
@@ -52,7 +55,7 @@ public class Calculator {
      * Function to apply to 2 operands in expression.
      * @param operation function to apply.
      */
-    private void calculateBySign(BiFunction<Double, Double, Double> operation) {
+    private void calculateBySign(@NotNull BiFunction<Double, Double, Double> operation) {
         numbers.push(operation.apply(numbers.pop(), numbers.pop()));
     }
 }

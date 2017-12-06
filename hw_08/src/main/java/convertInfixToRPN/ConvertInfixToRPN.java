@@ -1,6 +1,8 @@
 package convertInfixToRPN;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
 /**
@@ -13,7 +15,7 @@ public class ConvertInfixToRPN {
      * @param string to check.
      * @return true if string is number otherwise false.
      */
-    private static boolean isNumber(String string) {
+    private static boolean isNumber(@NotNull String string) {
         try{
             Double.valueOf(string);
             return true;
@@ -26,8 +28,10 @@ public class ConvertInfixToRPN {
      * Converts infix expression to postfix one.
      * @param infixNotation expression in infix notation.
      * @return string array where elements are in postfix notation.
+     * @throws IllegalArgumentException if operation is not supported and parsed.
      */
-    public static String[] convertInfixToRPN(String[] infixNotation) {
+    @NotNull
+    public static String[] convertInfixToRPN(@NotNull String[] infixNotation) throws IllegalArgumentException {
         Map<String, Integer> prededence = new HashMap<>();
         prededence.put("/", 5);
         prededence.put("*", 5);

@@ -5,6 +5,7 @@ import org.mockito.InOrder;
 import stack.StackImplementation;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -37,5 +38,17 @@ public class CalculatorTest {
         inOrder.verify(stackMock).push(22d);
         inOrder.verify(stackMock).push(3d);
         inOrder.verify(stackMock).push(66d);
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void testThrowsNumberFormatException() throws Exception {
+        Calculator calculator = new Calculator(new StackImplementation<>());
+        calculator.calculateExpression(new String[]{"22", "3", "%"});
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void testThrowsNumberFormatExceptionNotNumber() throws Exception {
+        Calculator calculator = new Calculator(new StackImplementation<>());
+        calculator.calculateExpression(new String[]{"22", "3ac", "*"});
     }
 }
