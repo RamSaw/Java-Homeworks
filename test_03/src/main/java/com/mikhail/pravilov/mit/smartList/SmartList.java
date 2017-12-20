@@ -2,15 +2,26 @@ package com.mikhail.pravilov.mit.smartList;
 
 import java.util.*;
 
+/**
+ * Realization of smart list: if 1 element then only one reference, up to 5 then array, otherwise ArrayList.
+ * @param <E> type of elements stored in list.
+ */
 public class SmartList<E> extends AbstractList<E> implements List<E> {
     private static final int SECOND_TYPE_MAX = 5;
     private int size = 0;
     private Object reference;
 
+    /**
+     * Constructor that adds all elements from collection to list.
+     * @param collection elements to add.
+     */
     public SmartList(Collection<? extends E> collection) {
         this.addAll(collection);
     }
 
+    /**
+     * Empty constructor. reference is null, size is 0.
+     */
     public SmartList() {
     }
 
