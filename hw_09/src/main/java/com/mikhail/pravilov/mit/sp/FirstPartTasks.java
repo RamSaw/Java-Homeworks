@@ -32,8 +32,7 @@ public final class FirstPartTasks {
 
     // Список альбомов, в которых есть хотя бы один трек с рейтингом более 95, отсортированный по названию
     public static List<Album> sortedFavorites(Stream<Album> s) {
-        return s.filter(album -> album.getTracks().stream().filter(track -> track.getRating() > 95).
-                count() > 0).sorted(Comparator.comparing(Album::getName)).collect(toList());
+        return s.filter(album -> album.getTracks().stream().anyMatch(track -> track.getRating() > 95)).sorted(Comparator.comparing(Album::getName)).collect(toList());
     }
 
     // Сгруппировать альбомы по артистам
@@ -67,15 +66,7 @@ public final class FirstPartTasks {
         return albums.sorted((album1, album2) -> {
             double average1 = album1.getTracks().stream().mapToInt(Track::getRating).average().orElse(0);
             double average2 = album2.getTracks().stream().mapToInt(Track::getRating).average().orElse(0);
-            if (average1 > average2) {
-                return -1;
-            }
-            else if (average1 < average2) {
-                return 1;
-            }
-            else {
-                return 0;
-            }
+            return Double.compare(average2, average1);
         }).collect(toList());
     }
 
@@ -92,6 +83,7 @@ public final class FirstPartTasks {
     }
 
     // Вернуть поток из объектов класса 'clazz'
+    @SuppressWarnings("unchecked")
     public static <R> Stream<R> filterIsInstance(Stream<?> s, Class<R> clazz) {
         return (Stream<R>) s.filter(clazz::isInstance);
     }
