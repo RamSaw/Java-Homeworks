@@ -16,6 +16,7 @@ public class LazyFactory {
      * @param <T> type of value.
      * @return {@link Lazy} object.
      */
+    @NotNull
     public static <T> Lazy<T> createAsynchronizedLazy(@NotNull Supplier<T> supplier) {
         return new Lazy<T>() {
             @Nullable private T result;
@@ -40,6 +41,7 @@ public class LazyFactory {
      * @param <T> type of value.
      * @return {@link Lazy} object.
      */
+    @NotNull
     public static <T> Lazy<T> createSynchronizedLazy(@NotNull Supplier<T> supplier) {
         return new Lazy<T>() {
             @Nullable
