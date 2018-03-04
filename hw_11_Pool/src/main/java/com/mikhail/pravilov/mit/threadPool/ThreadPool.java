@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 
 /**
  * Class that realizes thread pool on {@link LightFuture} tasks.
+ *
  * @param <R> type of calculated value.
  */
 public class ThreadPool<R> {
@@ -25,11 +26,12 @@ public class ThreadPool<R> {
 
     /**
      * Constructor that create pool of numberOfThreads threads.
+     *
      * @param numberOfThreads to create.
      */
     public ThreadPool(int numberOfThreads) {
         Runnable runTask = () -> {
-            while (!Thread.interrupted())  {
+            while (!Thread.interrupted()) {
                 LightFutureForThreadPool task = eraseFirstTask();
                 if (task != null) {
                     task.execute();
@@ -44,6 +46,7 @@ public class ThreadPool<R> {
 
     /**
      * Creates task ({@link LightFutureForThreadPool} instance) from given supplier and adds it to pool.
+     *
      * @param supplier computation to execute.
      * @return created task casted to {@link LightFuture} (cuts off execute method).
      */
@@ -69,6 +72,7 @@ public class ThreadPool<R> {
 
     /**
      * Thread-safely erases first task from {@link ThreadPool#threads} queue.
+     *
      * @return {@link LightFutureForThreadPool} if first element exists, otherwise null.
      */
     @Nullable
@@ -87,6 +91,7 @@ public class ThreadPool<R> {
 
     /**
      * Getter for array list of running threads in thread pool.
+     *
      * @return {@link ThreadPool#threads} - threads of thread pool.
      */
     @NotNull
@@ -122,6 +127,7 @@ public class ThreadPool<R> {
 
         /**
          * Constructs task of {@link LightFutureForThreadPool} type that will compute given supplier.
+         *
          * @param supplier to compute, this param will be saved to {@link LightFutureForThreadPool#supplier}.
          */
         private LightFutureForThreadPool(@NotNull Supplier<R> supplier) {
@@ -139,8 +145,7 @@ public class ThreadPool<R> {
                     if (!isCalculated) {
                         try {
                             result = supplier.get();
-                        }
-                        catch (Throwable t) {
+                        } catch (Throwable t) {
                             exception = new LightExecutionException(t);
                         }
                         isCalculated = true;
@@ -161,11 +166,10 @@ public class ThreadPool<R> {
             try {
                 synchronized (this) {
                     while (!isReady()) {
-                            wait();
+                        wait();
                     }
                 }
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 return null;
             }

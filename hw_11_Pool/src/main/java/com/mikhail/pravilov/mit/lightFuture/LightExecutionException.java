@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 public class LightExecutionException extends ExecutionException {
     /**
      * Default constructor from {@link Throwable}.
+     *
      * @param cause of exception.
      */
     public LightExecutionException(Throwable cause) {

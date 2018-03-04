@@ -42,7 +42,9 @@ public class ThreadPoolTest {
     @Test(expected = LightExecutionException.class)
     public void lightExecutionExceptionThrows() throws Exception {
         ThreadPool<Integer> pool = new ThreadPool<>(1);
-        LightFuture<Integer> task = pool.addTask(() -> { throw new RuntimeException(); });
+        LightFuture<Integer> task = pool.addTask(() -> {
+            throw new RuntimeException();
+        });
         task.get();
     }
 
