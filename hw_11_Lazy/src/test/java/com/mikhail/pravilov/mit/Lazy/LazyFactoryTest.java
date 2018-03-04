@@ -42,8 +42,7 @@ public class LazyFactoryTest {
                 try {
                     assertEquals(new Integer(10), lazy.get());
                     // Number of invocations will be checked after joining
-                }
-                catch (final Throwable t) {
+                } catch (final Throwable t) {
                     exceptionOccurredInOtherThreadFlag[0] = true;
                     exceptionOccurredInOtherThread[0] = t;
                     throw t;

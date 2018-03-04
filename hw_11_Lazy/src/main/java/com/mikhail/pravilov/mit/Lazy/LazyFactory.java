@@ -12,14 +12,16 @@ import java.util.function.Supplier;
 public class LazyFactory {
     /**
      * Creates one-threading {@link Lazy} object.
+     *
      * @param supplier where the value will be taken.
-     * @param <T> type of value.
+     * @param <T>      type of value.
      * @return {@link Lazy} object.
      */
     @NotNull
     public static <T> Lazy<T> createAsynchronizedLazy(@NotNull Supplier<T> supplier) {
         return new Lazy<T>() {
-            @Nullable private T result;
+            @Nullable
+            private T result;
             private boolean isCalculated = false;
 
             @Override
@@ -37,8 +39,9 @@ public class LazyFactory {
 
     /**
      * Creates multithreading {@link Lazy} object.
+     *
      * @param supplier where the value will be taken.
-     * @param <T> type of value.
+     * @param <T>      type of value.
      * @return {@link Lazy} object.
      */
     @NotNull
@@ -56,8 +59,7 @@ public class LazyFactory {
                         if (!isCalculated) {
                             result = supplier.get();
                             isCalculated = true;
-                        }
-                        else {
+                        } else {
                             return result;
                         }
                     }
