@@ -1,0 +1,8 @@
+language: java
+jdk:
+  - oraclejdk8
+os:
+  - linux
+script:
+  - chmod +x subdirectories_build.sh
+  - ./subdirectories_build.sh
