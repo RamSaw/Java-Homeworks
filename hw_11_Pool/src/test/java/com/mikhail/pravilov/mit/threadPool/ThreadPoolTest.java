@@ -72,7 +72,7 @@ public class ThreadPoolTest {
     @Test
     public void taskThenApplyStartsOnlyAfter() throws Exception {
         ThreadPool<Integer> pool = new ThreadPool<>(5);
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             pool.addTask(() -> 10 + 10);
         }
         LightFuture<Integer> task = pool.addTask(() -> 2 * 2);
