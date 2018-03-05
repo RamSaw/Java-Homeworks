@@ -72,14 +72,27 @@ public class ThreadPoolTest {
     @Test
     public void taskThenApplyStartsOnlyAfter() throws Exception {
         ThreadPool<Integer> pool = new ThreadPool<>(5);
-        for (int i = 0; i < 10; i++) {
+        final int[] first = {0};
+        final int[] second = {0};
+
+        for (int i = 0; i < 100; i++) {
             pool.addTask(() -> 10 + 10);
         }
-        LightFuture<Integer> task = pool.addTask(() -> 2 * 2);
-        LightFuture<Integer> nextTask = task.thenApply((i) -> i + 10);
-        while (!task.isReady()) {
-            assertFalse(nextTask.isReady());
+        LightFuture<Integer> task = pool.addTask(() ->
+        {
+            first[0] = 2 * 2;
+            return first[0];
+        });
+        LightFuture<Integer> nextTask = task.thenApply((i) -> {
+            synchronized (first) {
+                second[0] = first[0] * 10;
+            }
+            return i + 10;
+        });
+        while (!nextTask.isReady()) {
+            Thread.sleep(100);
         }
+        assertEquals(second[0], 40);
     }
 
     @Test
