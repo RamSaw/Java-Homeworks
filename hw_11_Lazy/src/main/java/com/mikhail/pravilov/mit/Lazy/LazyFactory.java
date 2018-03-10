@@ -48,7 +48,7 @@ public class LazyFactory {
     public static <T> Lazy<T> createSynchronizedLazy(@NotNull Supplier<T> supplier) {
         return new Lazy<T>() {
             @Nullable
-            private T result; // no need in volatile because after sync all is written in general memory
+            private volatile T result; // no need in volatile because after sync all is written in general memory
             private boolean isCalculated = false; // no need in volatile because after sync all is written in general memory
 
             @Override
