@@ -1,12 +1,15 @@
 package com.mikhail.pravilov.mit.ticTacToe.model;
 
-import javafx.util.Pair;
-
-import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
-
+/**
+ * Class that describes basic behaviour all TicTacToe games with bots.
+ */
 abstract public class TicTacToeBot extends TicTacToe {
-    public TicTacToeBot(int width, int height) {
+    /**
+     * Default constructor, constructs width * height field.
+     * @param width of the field.
+     * @param height of the field.
+     */
+    TicTacToeBot(int width, int height) {
         super(width, height);
     }
 
@@ -18,5 +21,8 @@ abstract public class TicTacToeBot extends TicTacToe {
         }
     }
 
+    /**
+     * Performs bot turn as it should be.
+     */
     abstract protected void doBotTurn();
 }

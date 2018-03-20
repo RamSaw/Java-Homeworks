@@ -8,19 +8,37 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.time.temporal.UnsupportedTemporalTypeException;
 
-import static com.mikhail.pravilov.mit.ticTacToe.model.TicTacToe.TypeOfCell.*;
-
+/**
+ * Class that describes game stage supplier. Creates stage special for game process.
+ */
 public class GameStageSupplier implements StageSupplier {
+    /**
+     * TicTacToe game that is playing in this stage.
+     */
     private TicTacToe game;
+    /**
+     * Field represented in ui by {@link GridPane}.
+     */
     private GridPane field;
+    /**
+     * Stage of game process.
+     */
     private Stage stage;
+    /**
+     * Cells of the field that extends buttons and can be clicked.
+     */
     private Cell cells[][];
 
-    public GameStageSupplier(TicTacToe game) {
+    /**
+     * Constructor of game stage supplier. Creates Stage instance and sets main game process scene.
+     * @param game to run.
+     */
+    public GameStageSupplier(@NotNull TicTacToe game) {
         this.game = game;
         this.stage = new Stage();
         try {
@@ -34,6 +52,12 @@ public class GameStageSupplier implements StageSupplier {
         }
     }
 
+    /**
+     * Game scene getter.
+     * @return main scene of the game process.
+     * @throws IOException if fxml of scene failed to load.
+     */
+    @NotNull
     private Scene getGameScene() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/GameScene.fxml"));
         Scene scene = new Scene(root);
@@ -43,6 +67,9 @@ public class GameStageSupplier implements StageSupplier {
         return scene;
     }
 
+    /**
+     * Sets up all cells of game field. Defines onClick events for cells to make turns.
+     */
     private void setUpField() {
         cells = new Cell[game.getWidth()][game.getHeight()];
         field = new GridPane();
@@ -91,6 +118,9 @@ public class GameStageSupplier implements StageSupplier {
         }
     }
 
+    /**
+     * Updates view and states of cells as buttons.
+     */
     private void updateField() {
         for (Cell[] row : cells) {
             for (Cell cell : row) {
@@ -123,20 +153,43 @@ public class GameStageSupplier implements StageSupplier {
         return stage;
     }
 
+    /**
+     * Class that describes cell of field in UI. It is particularly button.
+     */
     private class Cell extends Button {
+        /**
+         * x coordinate of cell.
+         */
         private int x;
+        /**
+         * y coordinate of cell.
+         */
         private int y;
 
+        /**
+         * Constructor that creates instance of {@link Cell} with (x, y) position and text to display on button.
+         * @param x coordinate of cell.
+         * @param y coordinate of cell.
+         * @param text to display.
+         */
         Cell(int x, int y, String text) {
             super(text);
             this.x = x;
             this.y = y;
         }
 
+        /**
+         * Getter for x cell coordinate.
+         * @return x cell coordinate.
+         */
         int getX() {
             return x;
         }
 
+        /**
+         * Getter for y cell coordinate.
+         * @return y cell coordinate.
+         */
         int getY() {
             return y;
         }

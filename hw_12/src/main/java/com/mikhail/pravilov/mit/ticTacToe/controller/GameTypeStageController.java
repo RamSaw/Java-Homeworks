@@ -7,6 +7,9 @@ import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic;
 import com.mikhail.pravilov.mit.ticTacToe.view.GameStageSupplier;
 import javafx.scene.control.Alert;
 
+/**
+ * Class that implements choose game type stage controllers.
+ */
 public class GameTypeStageController {
     /**
      * Starts new window(stage) for hot seat game.

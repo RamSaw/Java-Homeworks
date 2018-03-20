@@ -31,6 +31,10 @@ public class TicTacToeApplication extends Application {
         super.stop();
     }
 
+    /**
+     * Main method of program. Runs tictactoe application.
+     * @param args command line arguments.
+     */
     public static void main(String[] args) {
         Application.launch(args);
     }

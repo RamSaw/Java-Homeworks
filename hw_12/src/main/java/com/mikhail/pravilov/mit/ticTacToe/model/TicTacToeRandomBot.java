@@ -5,7 +5,15 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Class that describes random bot in tictactoe game.
+ */
 public class TicTacToeRandomBot extends TicTacToeBot {
+    /**
+     * Default constructor, constructs width * height field.
+     * @param width of the field.
+     * @param height of the field.
+     */
     public TicTacToeRandomBot(int width, int height) {
         super(width, height);
     }
