@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hw_12.iml" filepath="$PROJECT_DIR$/.idea/modules/hw_12.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hw_12_main.iml" filepath="$PROJECT_DIR$/.idea/modules/hw_12_main.iml" group="hw_12" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hw_12_test.iml" filepath="$PROJECT_DIR$/.idea/modules/hw_12_test.iml" group="hw_12" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mikhail.pravilov.mit.ticTacToe.controller.GameTypeStageController">
+    <Button fx:id="hotSeatButton" minHeight="40" minWidth="200" onAction="#startHotSeatGame" text="Hot Seat" />
+    <Button fx:id="easyLevelButton" minHeight="40" minWidth="200" onAction="#startRandomBotGame" text="Easy Game With Bot" />
+    <Button fx:id="hardLevelButton" minHeight="40" minWidth="200" onAction="#startBestStrategyBotGame" text="Hard Game With Bot" />
+    <Button fx:id="showStatisticButton" minHeight="40" minWidth="200" onAction="#showStatistic" text="Show Statistic" />
+</VBox>
