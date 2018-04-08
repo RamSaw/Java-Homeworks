@@ -6,6 +6,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
+import static com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic.*;
+
 /**
  * Class that implements not loosing bot that plays always the best strategy by pre-calculating all game.
  */
@@ -17,6 +19,11 @@ public class TicTacToeBestStrategyBot extends TicTacToeBot {
      */
     public TicTacToeBestStrategyBot(int width, int height) {
         super(width, height);
+    }
+
+    @Override
+    public Mode getMode() {
+        return Mode.BESTSTRATEGYBOT;
     }
 
     @Override

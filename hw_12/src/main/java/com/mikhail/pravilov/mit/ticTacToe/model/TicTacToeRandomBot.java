@@ -5,6 +5,8 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic.*;
+
 /**
  * Class that describes random bot in tictactoe game.
  */
@@ -16,6 +18,11 @@ public class TicTacToeRandomBot extends TicTacToeBot {
      */
     public TicTacToeRandomBot(int width, int height) {
         super(width, height);
+    }
+
+    @Override
+    public Mode getMode() {
+        return Mode.RANDOMBOT;
     }
 
     @Override

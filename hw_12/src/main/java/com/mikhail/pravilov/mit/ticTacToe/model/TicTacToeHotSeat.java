@@ -1,5 +1,7 @@
 package com.mikhail.pravilov.mit.ticTacToe.model;
 
+import static com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic.*;
+
 /**
  * Class that describes hot seat tictactoe game.
  */
@@ -11,6 +13,11 @@ public class TicTacToeHotSeat extends TicTacToe {
      */
     public TicTacToeHotSeat(int width, int height) {
         super(width, height);
+    }
+
+    @Override
+    public Mode getMode() {
+        return Mode.HOTSEAT;
     }
 
     @Override

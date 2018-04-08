@@ -1,5 +1,6 @@
 package com.mikhail.pravilov.mit.ticTacToe.model;
 
+import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic.Mode;
 import javafx.util.Pair;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -58,6 +59,12 @@ abstract public class TicTacToe {
             Arrays.fill(row, FREE);
         }
     }
+
+    /**
+     * Returns type of game(mode): hot seat, with random bot, with best strategy bot.
+     * @return mode of the current game.
+     */
+    abstract public Mode getMode();
 
     /**
      * Processes user turn in (x, y) corresponding as it should be: with bot turn or not or something else.
@@ -147,13 +154,13 @@ abstract public class TicTacToe {
         if (before == RUNNING && after != RUNNING) {
             switch (after) {
                 case ZERO_WON:
-                    TicTacToeStatistic.getInstance().addZeroWin(isUndoTurn ? -1 : 1);
+                    TicTacToeStatistic.getInstance().addZeroWin(isUndoTurn ? -1 : 1, getMode());
                     break;
                 case DAGGER_WON:
-                    TicTacToeStatistic.getInstance().addDaggerWin(isUndoTurn ? -1 : 1);
+                    TicTacToeStatistic.getInstance().addDaggerWin(isUndoTurn ? -1 : 1, getMode());
                     break;
                 case DRAW:
-                    TicTacToeStatistic.getInstance().addDraw(isUndoTurn ? -1 : 1);
+                    TicTacToeStatistic.getInstance().addDraw(isUndoTurn ? -1 : 1, getMode());
                     break;
                 default:
                     throw new UnsupportedOperationException("Unknown game state");
@@ -236,7 +243,8 @@ abstract public class TicTacToe {
      */
     @Contract(pure = true)
     private boolean isWinRightDown(int x, int y) {
-        return field[x][y] != FREE && x + 2 < width && y + 2 < height && field[x][y] == field[x + 1][y + 1] && field[x + 1][y + 1] == field[x + 2][y + 2];
+        return field[x][y] != FREE && x + 2 < width && y + 2 < height &&
+                field[x][y] == field[x + 1][y + 1] && field[x + 1][y + 1] == field[x + 2][y + 2];
     }
 
     /**
@@ -247,7 +255,8 @@ abstract public class TicTacToe {
      */
     @Contract(pure = true)
     private boolean isWinLeftDown(int x, int y) {
-        return field[x][y] != FREE && x - 2 >= 0 && y + 2 < height && field[x][y] == field[x - 1][y + 1] && field[x - 1][y + 1] == field[x - 2][y + 2];
+        return field[x][y] != FREE && x - 2 >= 0 && y + 2 < height &&
+                field[x][y] == field[x - 1][y + 1] && field[x - 1][y + 1] == field[x - 2][y + 2];
     }
 
     /**

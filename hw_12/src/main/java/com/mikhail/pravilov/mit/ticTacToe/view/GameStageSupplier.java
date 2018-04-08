@@ -6,12 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.time.temporal.UnsupportedTemporalTypeException;
+
+import static com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic.Mode.*;
 
 /**
  * Class that describes game stage supplier. Creates stage special for game process.
@@ -25,6 +28,10 @@ public class GameStageSupplier implements StageSupplier {
      * Field represented in ui by {@link GridPane}.
      */
     private GridPane field;
+    /**
+     * Label which indicates game state.
+     */
+    private Label gameStateLabel;
     /**
      * Stage of game process.
      */
@@ -62,8 +69,10 @@ public class GameStageSupplier implements StageSupplier {
         Parent root = FXMLLoader.load(getClass().getResource("/view/GameScene.fxml"));
         Scene scene = new Scene(root);
         HBox mainHBox = (HBox) scene.lookup("#mainHBox");
+        gameStateLabel = new Label("RUNNING");
+        mainHBox.getChildren().add(0, gameStateLabel);
         setUpField();
-        mainHBox.getChildren().add(0, field);
+        mainHBox.getChildren().add(1, field);
         return scene;
     }
 
@@ -76,7 +85,7 @@ public class GameStageSupplier implements StageSupplier {
 
         for (int x = 0; x < game.getWidth(); x++) {
             for (int y = 0; y < game.getHeight(); y++) {
-                Cell cell = new Cell(x, y,"FREE");
+                Cell cell = new Cell(x, y,"");
                 cells[x][y] = cell;
                 cell.setMinSize(100, 100);
                 int finalX = x;
@@ -92,26 +101,39 @@ public class GameStageSupplier implements StageSupplier {
                         errorTurnAlert.showAndWait();
                     }
                     updateField();
+                    StringBuilder gameStateLabelText = new StringBuilder();
                     if (game.isEnded()) {
-                        Alert winAlert = new Alert(Alert.AlertType.INFORMATION);
-                        winAlert.setTitle("Game is over!");
-                        winAlert.setHeaderText("Congratulations!");
-                        String winningTeamCongrats = null;
+                        gameStateLabelText.append("Game is over!\n");
                         switch (game.getGameState()) {
                             case DAGGER_WON:
-                                winningTeamCongrats = "Dagger wins, congrats!";
+                                if (game.getMode() == HOTSEAT) {
+                                    gameStateLabelText.append("Congratulations!\n");
+                                    gameStateLabelText.append("Dagger wins, congrats!\n");
+                                }
+                                else {
+                                    gameStateLabelText.append("Ohh, NO!\n");
+                                    gameStateLabelText.append("You lose!\n");
+                                }
                                 break;
                             case ZERO_WON:
-                                winningTeamCongrats = "Zero wins, congrats!";
+                                gameStateLabelText.append("Congratulations!\n");
+                                if (game.getMode() == HOTSEAT) {
+                                    gameStateLabelText.append("Zero wins, congrats!\n");
+                                }
+                                else {
+                                    gameStateLabelText.append("You win!\n");
+                                }
                                 break;
                             case DRAW:
-                                winningTeamCongrats = "Draw!";
+                                gameStateLabelText.append("Congratulations!\n");
+                                gameStateLabelText.append("It's a draw!\n");
                                 break;
                         }
-                        winAlert.setContentText(winningTeamCongrats);
-                        winAlert.showAndWait();
-                        stage.close();
                     }
+                    else {
+                        gameStateLabelText.append("RUNNING\n");
+                    }
+                    gameStateLabel.setText(gameStateLabelText.toString());
                 });
                 field.add(cell, x, y);
             }
@@ -128,15 +150,15 @@ public class GameStageSupplier implements StageSupplier {
                 boolean isDisabled;
                 switch (game.getTypeOfCell(cell.getX(), cell.getY())) {
                     case FREE:
-                        newCellText = "FREE";
+                        newCellText = "";
                         isDisabled = false;
                         break;
                     case DAGGER:
-                        newCellText = "DAGGER";
+                        newCellText = "X";
                         isDisabled = true;
                         break;
                     case ZERO:
-                        newCellText = "ZERO";
+                        newCellText = "0";
                         isDisabled = true;
                         break;
                     default:

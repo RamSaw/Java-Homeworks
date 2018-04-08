@@ -4,6 +4,7 @@ import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeBestStrategyBot;
 import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeHotSeat;
 import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeRandomBot;
 import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic;
+import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic.Mode;
 import com.mikhail.pravilov.mit.ticTacToe.view.GameStageSupplier;
 import javafx.scene.control.Alert;
 
@@ -40,7 +41,15 @@ public class GameTypeStageController {
         showStatisticAlert.setTitle("Statistic");
         showStatisticAlert.setHeaderText("You have the following statistic:");
         TicTacToeStatistic statistic = TicTacToeStatistic.getInstance();
-        showStatisticAlert.setContentText("Dagger: " + statistic.getNumberOfDaggerWins() + ", Zero: " + statistic.getNumberOfZeroWins() + ", Draws: " + statistic.getNumberOfDraws());
+        StringBuilder contentText = new StringBuilder();
+        for (Mode mode: Mode.values()) {
+            contentText.append(mode).append('\n').
+                    append("Dagger: ").append(statistic.getNumberOfDaggerWins(mode)).
+                    append(", Zero: ").append(statistic.getNumberOfZeroWins(mode)).
+                    append(", Draws: ").append(statistic.getNumberOfDraws(mode)).
+                    append('\n');
+        }
+        showStatisticAlert.setContentText(contentText.toString());
         showStatisticAlert.showAndWait();
     }
 }
