@@ -43,6 +43,20 @@ public class CheckSummerTest {
     }
 
     @Test
+    public void getCheckSumDirWithOneFile() throws Exception {
+        Path path = Paths.get("testDirs/dirWithOneFile");
+        byte[] oneThreadResult = CheckSummer.getCheckSum(path);
+        byte[] forkJointResult = ForkJoinCheckSummer.getCheckSum(path);
+        assertArrayEquals(oneThreadResult, forkJointResult);
+        MessageDigest md1 = MessageDigest.getInstance("MD5");
+        MessageDigest md2 = MessageDigest.getInstance("MD5");
+        md2.update(Files.readAllBytes(Paths.get("testDirs/dirWithOneFile/file")));
+        md1.update("dirWithOneFile".getBytes());
+        md1.update(md2.digest());
+        assertArrayEquals(md1.digest(), oneThreadResult);
+    }
+
+    @Test
     public void getCheckSumHardTest() throws Exception {
         Path path = Paths.get("testDirs");
         byte[] oneThreadResult = CheckSummer.getCheckSum(path);
