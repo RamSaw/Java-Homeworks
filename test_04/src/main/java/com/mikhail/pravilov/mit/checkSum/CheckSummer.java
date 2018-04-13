@@ -10,7 +10,17 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/**
+ * Implements single thread check summer.
+ */
 public class CheckSummer {
+    /**
+     * Calculates check sum of given path and subpaths.
+     * @param path where to calculate check sum.
+     * @return MD5 hash sum.
+     * @throws NoSuchAlgorithmException if MD5 not supported by {@link MessageDigest}.
+     * @throws IOException if problems occurred during working with paths.
+     */
     public static byte[] getCheckSum(Path path) throws NoSuchAlgorithmException, IOException {
         MessageDigest md5Hash = MessageDigest.getInstance("MD5");
         if (!Files.isDirectory(path)) {

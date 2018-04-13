@@ -26,10 +26,17 @@ public class ForkJoinCheckSummer {
         return new ForkJoinPool().invoke(new ForkJoinCheckSummerTask(path));
     }
 
+    /**
+     * Task for ForkJoinPool.
+     */
     private static class ForkJoinCheckSummerTask extends RecursiveTask<byte[]> {
         private Path path;
 
-        public ForkJoinCheckSummerTask(Path path) {
+        /**
+         * Creates check sum task with given path.
+         * @param path where to calculate check sum.
+         */
+        ForkJoinCheckSummerTask(Path path) {
             this.path = path;
         }
 
