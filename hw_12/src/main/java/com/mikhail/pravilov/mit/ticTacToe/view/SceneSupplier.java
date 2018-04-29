@@ -1,14 +1,16 @@
 package com.mikhail.pravilov.mit.ticTacToe.view;
 
-import javafx.stage.Stage;
+import javafx.scene.Scene;
+
+import java.io.IOException;
 
 /**
  * Interface that describes methods of stage suppliers.
  */
-interface StageSupplier {
+interface SceneSupplier {
     /**
      * Stage getter.
      * @return Stage instance.
      */
-    Stage getStage();
+    Scene getScene() throws IOException;
 }

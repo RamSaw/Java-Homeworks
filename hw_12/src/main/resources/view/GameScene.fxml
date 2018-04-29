@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.HBox?>
-
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
 <HBox fx:id="mainHBox" alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mikhail.pravilov.mit.ticTacToe.controller.GameTypeStageController">
-    <padding><Insets top="25"/></padding>
+    <padding><Insets top="25" /></padding>
+   <children>
+      <Button fx:id="backToChooseGameTypeButton" mnemonicParsing="false" onAction="#backToChooseGameType" text="Back">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+   </children>
 </HBox>

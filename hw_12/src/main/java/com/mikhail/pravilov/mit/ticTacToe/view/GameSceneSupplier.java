@@ -19,7 +19,7 @@ import static com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic.Mode.*
 /**
  * Class that describes game stage supplier. Creates stage special for game process.
  */
-public class GameStageSupplier implements StageSupplier {
+public class GameSceneSupplier implements SceneSupplier {
     /**
      * TicTacToe game that is playing in this stage.
      */
@@ -33,10 +33,6 @@ public class GameStageSupplier implements StageSupplier {
      */
     private Label gameStateLabel;
     /**
-     * Stage of game process.
-     */
-    private Stage stage;
-    /**
      * Cells of the field that extends buttons and can be clicked.
      */
     private Cell cells[][];
@@ -45,18 +41,8 @@ public class GameStageSupplier implements StageSupplier {
      * Constructor of game stage supplier. Creates Stage instance and sets main game process scene.
      * @param game to run.
      */
-    public GameStageSupplier(@NotNull TicTacToe game) {
+    public GameSceneSupplier(@NotNull TicTacToe game) {
         this.game = game;
-        this.stage = new Stage();
-        try {
-            stage.setScene(getGameScene());
-        } catch (IOException e) {
-            Alert errorDuringLoadingScene = new Alert(Alert.AlertType.INFORMATION);
-            errorDuringLoadingScene.setTitle("Error");
-            errorDuringLoadingScene.setHeaderText("Error during loading scene");
-            errorDuringLoadingScene.setContentText("Reason: " + e.getLocalizedMessage());
-            errorDuringLoadingScene.showAndWait();
-        }
     }
 
     /**
@@ -171,8 +157,8 @@ public class GameStageSupplier implements StageSupplier {
     }
 
     @Override
-    public Stage getStage() {
-        return stage;
+    public Scene getScene() throws IOException {
+        return getGameScene();
     }
 
     /**

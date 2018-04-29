@@ -5,32 +5,43 @@ import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeHotSeat;
 import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeRandomBot;
 import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic;
 import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic.Mode;
-import com.mikhail.pravilov.mit.ticTacToe.view.GameStageSupplier;
+import com.mikhail.pravilov.mit.ticTacToe.view.GameSceneSupplier;
+import com.mikhail.pravilov.mit.ticTacToe.view.GameTypeSceneSupplier;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * Class that implements choose game type stage controllers.
  */
 public class GameTypeStageController {
+    private Stage getStage(ActionEvent actionEvent) {
+        Node source = (Node) actionEvent.getSource();
+        return (Stage) source.getScene().getWindow();
+    }
+
     /**
      * Starts new window(stage) for hot seat game.
      */
-    public void startHotSeatGame() {
-        new GameStageSupplier(new TicTacToeHotSeat(3, 3)).getStage().show();
+    public void startHotSeatGame(ActionEvent actionEvent) throws IOException {
+        getStage(actionEvent).setScene(new GameSceneSupplier(new TicTacToeHotSeat(3, 3)).getScene());
     }
 
     /**
      * Starts new window(stage) for game with random bot.
      */
-    public void startRandomBotGame() {
-        new GameStageSupplier(new TicTacToeRandomBot(3, 3)).getStage().show();
+    public void startRandomBotGame(ActionEvent actionEvent) throws IOException {
+        getStage(actionEvent).setScene(new GameSceneSupplier(new TicTacToeRandomBot(3, 3)).getScene());
     }
 
     /**
      * Starts new window(stage) for game with not loosing bot.
      */
-    public void startBestStrategyBotGame() {
-        new GameStageSupplier(new TicTacToeBestStrategyBot(3, 3)).getStage().show();
+    public void startBestStrategyBotGame(ActionEvent actionEvent) throws IOException {
+        getStage(actionEvent).setScene(new GameSceneSupplier(new TicTacToeBestStrategyBot(3, 3)).getScene());
     }
 
     /**
@@ -51,5 +62,9 @@ public class GameTypeStageController {
         }
         showStatisticAlert.setContentText(contentText.toString());
         showStatisticAlert.showAndWait();
+    }
+
+    public void backToChooseGameType(ActionEvent actionEvent) throws IOException {
+        getStage(actionEvent).setScene(new GameTypeSceneSupplier().getScene());
     }
 }

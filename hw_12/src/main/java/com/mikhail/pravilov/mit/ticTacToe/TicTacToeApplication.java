@@ -1,7 +1,7 @@
 package com.mikhail.pravilov.mit.ticTacToe;
 
 import com.mikhail.pravilov.mit.ticTacToe.model.TicTacToeStatistic;
-import com.mikhail.pravilov.mit.ticTacToe.view.GameTypeStageSupplier;
+import com.mikhail.pravilov.mit.ticTacToe.view.GameTypeSceneSupplier;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -12,7 +12,9 @@ import java.io.IOException;
 public class TicTacToeApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        new GameTypeStageSupplier().getStage().show();
+        Stage stage = new Stage();
+        stage.setScene(new GameTypeSceneSupplier().getScene());
+        stage.show();
     }
 
     @Override
