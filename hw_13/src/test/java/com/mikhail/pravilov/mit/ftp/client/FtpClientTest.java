@@ -4,7 +4,6 @@ import com.mikhail.pravilov.mit.ftp.server.FtpServer;
 import org.junit.Test;
 
 import java.io.*;
-import java.util.Objects;
 
 import static java.lang.Thread.sleep;
 import static org.junit.Assert.*;

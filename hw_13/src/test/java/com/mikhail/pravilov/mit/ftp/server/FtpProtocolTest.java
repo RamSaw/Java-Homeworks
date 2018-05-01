@@ -3,7 +3,6 @@ package com.mikhail.pravilov.mit.ftp.server;
 import org.junit.Test;
 
 import java.io.*;
-import java.util.Objects;
 
 import static org.junit.Assert.*;
 
