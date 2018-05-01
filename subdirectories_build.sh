@@ -12,7 +12,7 @@ build_subdirectory () {
     if [ -f "gradlew" ]
     then
       chmod +x gradlew
-      ./gradlew build
+      ./gradlew build --info
     fi
 
     cd ..
