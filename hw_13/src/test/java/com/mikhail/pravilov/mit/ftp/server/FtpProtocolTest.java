@@ -27,7 +27,7 @@ public class FtpProtocolTest {
             case "testDir":
                 assertEquals("testDir", read);
                 assertTrue(dataInputStream.readBoolean());
-                assertEquals("testFileForGet", read);
+                assertEquals("testFileForGet", dataInputStream.readUTF());
                 assertFalse(dataInputStream.readBoolean());
                 break;
             default:
