@@ -16,8 +16,9 @@ public class FtpClientTest {
     public void main() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(Objects.requireNonNull(classLoader.getResource("testFileForGet")).getFile());
-        File dir = new File("src/test/resources");
-        ByteArrayInputStream in = new ByteArrayInputStream(("list " + dir.getAbsolutePath() + "\nget " + file.getAbsolutePath() + "\n" + "exit\n").getBytes());
+        String fileName = "testFileForGet";
+        String dirPath = file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - fileName.length() - 1);
+        ByteArrayInputStream in = new ByteArrayInputStream(("list " + dirPath + "\nget " + file.getAbsolutePath() + "\n" + "exit\n").getBytes());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream outPrintStream = new PrintStream(out, true, "UTF-8");
         System.setIn(in);

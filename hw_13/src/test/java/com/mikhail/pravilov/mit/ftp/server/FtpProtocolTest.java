@@ -12,8 +12,13 @@ public class FtpProtocolTest {
     public void processList() throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FtpProtocol ftpProtocol = new FtpProtocol(new DataOutputStream(out));
-        File dir = new File("src/test/resources");
-        ftpProtocol.process("list " + dir.getAbsolutePath());
+
+        String fileName = "testFileForGet";
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
+        String dirPath = file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - fileName.length() - 1);
+
+        ftpProtocol.process("list " + dirPath);
         DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(out.toByteArray()));
         assertEquals(2, dataInputStream.readInt());
         assertEquals("testFileForGet", dataInputStream.readUTF());
