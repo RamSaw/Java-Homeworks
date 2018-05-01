@@ -12,8 +12,7 @@ public class FtpProtocolTest {
     public void processGet() throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FtpProtocol ftpProtocol = new FtpProtocol(new DataOutputStream(out));
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(Objects.requireNonNull(classLoader.getResource("testFileForGet")).getFile());
+        File file = new File("testData/testFileForGet");
         ftpProtocol.process("get " + file.getAbsolutePath());
         DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(out.toByteArray()));
         assertEquals(4, dataInputStream.readLong());
@@ -29,12 +28,9 @@ public class FtpProtocolTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FtpProtocol ftpProtocol = new FtpProtocol(new DataOutputStream(out));
 
-        String fileName = "testFileForGet";
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
-        String dirPath = file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - fileName.length() - 1);
-        System.out.println(dirPath);
-        ftpProtocol.process("list " + dirPath);
+        String fileName = "testData";
+        File file = new File(fileName);
+        ftpProtocol.process("list " + file.getAbsolutePath());
         DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(out.toByteArray()));
         assertEquals(2, dataInputStream.readInt());
         assertEquals("testFileForGet", dataInputStream.readUTF());
