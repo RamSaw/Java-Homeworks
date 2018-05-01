@@ -24,11 +24,11 @@ public class FtpClientTest {
         System.setIn(in);
         System.setOut(outPrintStream);
         new Thread(() -> FtpServer.main(new String[]{"8989"})).start();
-        sleep(1000);
+        sleep(10000);
         FtpClient.main(new String[]{"localhost", "8989"});
         String expectedOutput = "2\ntestFileForGet FALSE\ntestDir TRUE\n4\n74 65 73 74 \n";
         assertEquals(expectedOutput, out.toString());
-        System.setIn(System.in);
+        System.setOut(System.out);
         System.setIn(System.in);
     }
 }
