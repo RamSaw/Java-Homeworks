@@ -81,8 +81,10 @@ public class FtpFileManagerTest {
         ftpFileManager.copy("testFileForGet", Paths.get("src/test/resources/testDir"));
         File source = Paths.get("src/test/resources/testFileForGet").toFile();
         File copied = Paths.get("src/test/resources/testDir/testFileForGet").toFile();
-        copied.deleteOnExit();
         assertTrue(FileUtils.contentEquals(source, copied));
+        if (!copied.delete()) {
+            throw new IllegalStateException("File is not deleted");
+        }
     }
 
     @Test
