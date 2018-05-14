@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="FtpServer">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/resources/FtpServer.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
