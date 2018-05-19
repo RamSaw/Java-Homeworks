@@ -1,5 +1,7 @@
 package com.mikhail.pravilov.mit.XUnit;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -9,13 +11,16 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Class that implements console client of XUnit test system.
+ */
 public class XUnitApplication {
     private static void printUsage() {
         System.err.println("Arguments: <path to tests root directory (without package dirs)> " +
                 "<fully qualified name of class with package (without .class extension)>");
     }
 
-    public static void main(String[] args) {
+    public static void main(@NotNull String[] args) {
         if (args.length != 2) {
             printUsage();
             return;
@@ -65,7 +70,9 @@ public class XUnitApplication {
         out.println("Number of fails: " + numberOfFailed);
     }
 
-    private static Class getTestingClass(Path pathToTestDirectory, String classQualifiedName) throws MalformedURLException, ClassNotFoundException {
+    @NotNull
+    private static Class getTestingClass(@NotNull Path pathToTestDirectory, @NotNull String classQualifiedName)
+            throws MalformedURLException, ClassNotFoundException {
         return (new URLClassLoader(new URL[] {pathToTestDirectory.toUri().toURL()})).loadClass(classQualifiedName);
     }
 

@@ -1,24 +1,33 @@
 package com.mikhail.pravilov.mit.XUnit;
 
-public class TestResult {
+import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Method;
+
+/**
+ * Class that describes test result.
+ */
+class TestResult {
     private boolean isPassed;
+    @NotNull
+    private Method testMethod;
     private Throwable exception;
-    private String methodName;
     private String failReason;
     private boolean isIgnored;
     private String ignoreReason;
     private long time;
 
     String getMethodName() {
-        return methodName;
+        return testMethod.getName();
     }
 
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
+    @NotNull
+    Method getTestMethod() {
+        return testMethod;
     }
 
-    TestResult(String methodName) {
-        this.methodName = methodName;
+    TestResult(@NotNull Method testMethod) {
+        this.testMethod = testMethod;
     }
 
     String getFailReason() {

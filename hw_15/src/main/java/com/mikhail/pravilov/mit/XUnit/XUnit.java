@@ -1,21 +1,42 @@
 package com.mikhail.pravilov.mit.XUnit;
 
 import com.mikhail.pravilov.mit.XUnit.annotations.Test;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * XUnit class that can run tests marked with annotations.
+ */
 class XUnit {
+    /**
+     * Class to test.
+     */
+    @NotNull
     private Class<?> testClass;
+    /**
+     * Processor of test class that parses test class.
+     */
+    @NotNull
     private TestClassProcessor testClassProcessor;
 
-    XUnit(Class<?> testClass) {
+    /**
+     * Constructor with test class.
+     * @param testClass class to test.
+     */
+    XUnit(@NotNull Class<?> testClass) {
         this.testClass = testClass;
         testClassProcessor = new TestClassProcessor(testClass);
     }
 
+    /**
+     * Runs all tests found in given test class in constuctor.
+     * @return list of test results.
+     */
+    @NotNull
     List<TestResult> runTests() {
         testClassProcessor.getBeforeClassMethod().ifPresent(method -> {
             try {
@@ -40,8 +61,9 @@ class XUnit {
         return testResults;
     }
 
-    private TestResult runTest(Method testMethod) {
-        TestResult testResult = new TestResult(testMethod.getName());
+    @NotNull
+    private TestResult runTest(@NotNull Method testMethod) {
+        TestResult testResult = new TestResult(testMethod);
 
         String ignoreMessage = testMethod.getAnnotation(Test.class).ignore();
         if (!ignoreMessage.equals("")) {

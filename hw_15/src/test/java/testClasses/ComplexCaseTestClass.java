@@ -2,7 +2,7 @@ package testClasses;
 
 import com.mikhail.pravilov.mit.XUnit.annotations.*;
 
-public class complexCaseTestClass {
+public class ComplexCaseTestClass {
     private static int testNumber;
     private int beforeNumber;
 
@@ -30,7 +30,7 @@ public class complexCaseTestClass {
     // Must Fail
     @Test
     public void failTest() {
-        assert testNumber != 200;
+        throw new AssertionError();
     }
 
     @Test
