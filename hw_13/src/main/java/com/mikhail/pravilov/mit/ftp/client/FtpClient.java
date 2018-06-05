@@ -14,8 +14,14 @@ import java.util.Set;
 class FtpClient implements AutoCloseable {
     @NotNull
     private final Socket clientSocket;
+    /**
+     * Stream to write to server.
+     */
     @NotNull
     private final DataOutputStream dataOutputStream;
+    /**
+     * Stream to read from server.
+     */
     @NotNull
     private final DataInputStream dataInputStream;
 
