@@ -1,5 +1,7 @@
 package com.mikhail.pravilov.mit.XUnit;
 
+import com.mikhail.pravilov.mit.XUnit.exceptions.MultipleAnnotationsException;
+import com.mikhail.pravilov.mit.XUnit.exceptions.MultiplePreparationMethodsException;
 import org.junit.Test;
 import testClasses.*;
 
@@ -30,23 +32,28 @@ public class TestClassProcessorTest {
         assertEquals(expected, real);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = MultiplePreparationMethodsException.class)
     public void twoBeforeClassMethodsFails() {
         new TestClassProcessor(TwoBeforeClass.class);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = MultiplePreparationMethodsException.class)
     public void twoBeforeMethodsFails() {
         new TestClassProcessor(TwoBefore.class);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = MultiplePreparationMethodsException.class)
     public void twoAfterMethodsFails() {
         new TestClassProcessor(TwoAfter.class);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = MultiplePreparationMethodsException.class)
     public void twoAfterClassMethodsFails() {
         new TestClassProcessor(TwoAfterClass.class);
+    }
+
+    @Test(expected = MultipleAnnotationsException.class)
+    public void multipleAnnotationsFails() {
+        new TestClassProcessor(MultipleAnnotations.class);
     }
 }

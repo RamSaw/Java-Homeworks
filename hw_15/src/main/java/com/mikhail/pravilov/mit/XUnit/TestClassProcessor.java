@@ -1,14 +1,18 @@
 package com.mikhail.pravilov.mit.XUnit;
 
 import com.mikhail.pravilov.mit.XUnit.annotations.*;
+import com.mikhail.pravilov.mit.XUnit.exceptions.MultipleAnnotationsException;
+import com.mikhail.pravilov.mit.XUnit.exceptions.MultiplePreparationMethodsException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 class TestClassProcessor {
     /**
@@ -33,6 +37,7 @@ class TestClassProcessor {
      */
     TestClassProcessor(@NotNull Class testClass) {
         this.testClass = testClass;
+        throwIfExistsMethodWithSeveralAnnotations();
         beforeClassMethod = findPreparationMethod(this::isBeforeClassMethod);
         beforeMethod = findPreparationMethod(this::isBeforeMethod);
         afterMethod = findPreparationMethod(this::isAfterMethod);
@@ -43,6 +48,7 @@ class TestClassProcessor {
     /**
      * Finds preparation method and checks it to be single in class.
      * @param isTargetMethod predicate that says if given method is target preparation method.
+     * @throws MultiplePreparationMethodsException if there are several preparation methods in class.
      * @return found method or null;
      */
     @Nullable
@@ -51,7 +57,8 @@ class TestClassProcessor {
         for (Method method : testClass.getMethods()) {
             if (isTargetMethod.test(method)) {
                 if (targetMethod != null) {
-                    throw new IllegalStateException("Multiple BeforeClass methods");
+                    throw new MultiplePreparationMethodsException("Multiple preparation methods: " +
+                            method.getName() + " and " + targetMethod.getName());
                 }
                 targetMethod = method;
             }
@@ -72,6 +79,30 @@ class TestClassProcessor {
             }
         }
         return testMethods;
+    }
+
+    /**
+     * Checks that all methods have no more than 1 annotation.
+     * @throws MultipleAnnotationsException if method has more than 1 annotation.
+     */
+    private void throwIfExistsMethodWithSeveralAnnotations() {
+        for (Method method : testClass.getMethods()) {
+            if (methodHasMultipleAnnotations(method)) {
+                throw new MultipleAnnotationsException("Method " + method.getName() + " has multiple annotations");
+            }
+        }
+    }
+
+    /**
+     * Checks if given methods has several annotations.
+     * @param method to check.
+     * @return true if has multiple annotations otherwise false.
+     */
+    private boolean methodHasMultipleAnnotations(Method method) {
+        List<Predicate<Method>> availableAnnotatedMethods = Arrays.asList(this::isBeforeClassMethod,
+                this::isBeforeMethod, this::isAfterMethod, this::isAfterClassMethod, this::isTestMethod);
+        return availableAnnotatedMethods.stream().
+                filter(methodPredicate -> methodPredicate.test(method)).collect(Collectors.toList()).size() > 1;
     }
 
     /**
