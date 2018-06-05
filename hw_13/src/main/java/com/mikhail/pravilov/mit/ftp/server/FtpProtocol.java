@@ -1,5 +1,7 @@
 package com.mikhail.pravilov.mit.ftp.server;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 
 /**
@@ -9,35 +11,41 @@ class FtpProtocol {
     /**
      * Data output stream to client.
      */
-    private DataOutputStream dataOutputStream;
+    @NotNull
+    private final DataOutputStream dataOutputStream;
 
     /**
      * Constructor, saves client output stream.
+     *
      * @param dataOutputStream output stream to client.
      */
-    FtpProtocol(DataOutputStream dataOutputStream) {
+    FtpProtocol(@NotNull DataOutputStream dataOutputStream) {
         this.dataOutputStream = dataOutputStream;
     }
 
     /**
      * Processes client requests.
+     *
      * @param request client request.
      * @throws IOException if data cannot be written to dataOutputStream.
      */
-    void process(String request) throws IOException {
-        String[] params = request.split(" ");
-        switch (params[0]) {
-            case "list":
-                processListRequest(params[1]);
+    void process(int requestType, @NotNull String request) throws IOException {
+        switch (requestType) {
+            case 1:
+                processListRequest(request);
                 break;
-            case "get":
-                processGetRequest(params[1]);
+            case 2:
+                processGetRequest(request);
                 break;
         }
     }
 
-    private void processListRequest(String path) throws IOException {
+    private void processListRequest(@NotNull String path) throws IOException {
         File folder = new File(path);
+        if (!folder.exists()) {
+            dataOutputStream.writeInt(-1);
+            return;
+        }
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {
             dataOutputStream.writeInt(listOfFiles.length);
@@ -50,13 +58,12 @@ class FtpProtocol {
                     dataOutputStream.writeBoolean(true);
                 }
             }
-        }
-        else {
+        } else {
             dataOutputStream.writeInt(0);
         }
     }
 
-    private void processGetRequest(String path) throws IOException {
+    private void processGetRequest(@NotNull String path) throws IOException {
         File file = new File(path);
         try (InputStream fileInputStream = new FileInputStream(file)) {
             byte[] readBytes = new byte[2048];
@@ -66,7 +73,7 @@ class FtpProtocol {
                 dataOutputStream.write(readBytes, 0, numberOfReadBytes);
             }
         } catch (FileNotFoundException e) {
-            dataOutputStream.writeLong(0);
+            dataOutputStream.writeLong(-1);
         }
     }
 }

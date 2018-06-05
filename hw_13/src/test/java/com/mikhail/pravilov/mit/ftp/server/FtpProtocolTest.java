@@ -13,7 +13,7 @@ public class FtpProtocolTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FtpProtocol ftpProtocol = new FtpProtocol(new DataOutputStream(out));
         File dir = new File("src/test/resources");
-        ftpProtocol.process("list " + dir.getAbsolutePath());
+        ftpProtocol.process(1, dir.getAbsolutePath());
         DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(out.toByteArray()));
         assertEquals(2, dataInputStream.readInt());
         String read = dataInputStream.readUTF();
@@ -42,7 +42,7 @@ public class FtpProtocolTest {
         FtpProtocol ftpProtocol = new FtpProtocol(new DataOutputStream(out));
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(Objects.requireNonNull(classLoader.getResource("testFileForGet")).getFile());
-        ftpProtocol.process("get " + file.getAbsolutePath());
+        ftpProtocol.process(2, file.getAbsolutePath());
         DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(out.toByteArray()));
         assertEquals(4, dataInputStream.readLong());
         assertEquals(116, dataInputStream.readByte());

@@ -1,5 +1,7 @@
 package com.mikhail.pravilov.mit.ftp.server;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,9 +12,10 @@ import java.net.Socket;
 public class FtpServer {
     /**
      * Main method of FTP server program. Accepts clients and creates threads for each of them.
+     *
      * @param args port number where to start listening.
      */
-    public static void main(String[] args) {
+    public static void main(@NotNull String[] args) {
         if (args.length != 1) {
             System.err.println("Usage: java FtpServer <port number>");
             System.exit(1);
@@ -38,12 +41,16 @@ public class FtpServer {
      * Client handler: runs in separate thread and listens to client request and responses.
      */
     private static class ClientHandler implements Runnable {
-        private Socket clientSocket;
-        private DataInputStream dataInputStream;
-        private DataOutputStream dataOutputStream;
-        private FtpProtocol ftpProtocol;
+        @NotNull
+        private final Socket clientSocket;
+        @NotNull
+        private final DataInputStream dataInputStream;
+        @NotNull
+        private final DataOutputStream dataOutputStream;
+        @NotNull
+        private final FtpProtocol ftpProtocol;
 
-        ClientHandler(Socket clientSocket, InputStream inputStream, OutputStream outputStream) {
+        ClientHandler(@NotNull Socket clientSocket, @NotNull InputStream inputStream, @NotNull OutputStream outputStream) {
             this.clientSocket = clientSocket;
             dataInputStream = new DataInputStream(inputStream);
             dataOutputStream = new DataOutputStream(outputStream);
@@ -54,8 +61,9 @@ public class FtpServer {
         public void run() {
             try {
                 while (!clientSocket.isClosed()) {
+                    int requestType = dataInputStream.readInt();
                     String request = dataInputStream.readUTF();
-                    ftpProtocol.process(request);
+                    ftpProtocol.process(requestType, request);
                     dataOutputStream.flush();
                 }
             } catch (IOException e) {
