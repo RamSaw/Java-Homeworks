@@ -73,8 +73,8 @@ class FtpClient {
      */
     @NotNull
     List<Pair<String, Boolean>> list(@NotNull Path path) throws IOException {
-        String command = "list " + path.toAbsolutePath().toString();
-        dataOutputStream.writeUTF(command);
+        dataOutputStream.writeInt(1);
+        dataOutputStream.writeUTF(path.toAbsolutePath().toString());
         dataOutputStream.flush();
         int sizeOfList = dataInputStream.readInt();
         List<Pair<String, Boolean>> listOfFiles = new LinkedList<>();
@@ -94,11 +94,14 @@ class FtpClient {
      * @throws IOException if error occurred during downloading and saving the file.
      */
     void download(@NotNull Path pathToFile, @NotNull Path saveFilePath) throws IOException {
-        String command = "get " + pathToFile.toAbsolutePath().toString();
-        dataOutputStream.writeUTF(command);
+        dataOutputStream.writeInt(2);
+        dataOutputStream.writeUTF(pathToFile.toAbsolutePath().toString());
         dataOutputStream.flush();
         long sizeOfFile = dataInputStream.readLong();
-        OutputStream fileWriter = Files.newOutputStream(Files.createFile(saveFilePath));
+        if (!saveFilePath.toFile().exists()) {
+            Files.createFile(saveFilePath);
+        }
+        OutputStream fileWriter = Files.newOutputStream(saveFilePath);
         byte[] buffer = new byte[2048];
         for (long i = 0; i < sizeOfFile;) {
             int numberOfReadBytes = dataInputStream.read(buffer);
